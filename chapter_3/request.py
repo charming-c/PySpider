@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 import re
 
 # r = requests.get("https://baidu.com")
+# print(r.cookies)
+# for key,value in r.cookies.items():
+#   print(key+" :" + value)
 # print(type(r))
 # print(r.status_code)
 # print(type(r.text))
@@ -30,11 +33,15 @@ import re
 # ret = BeautifulSoup(r.text,'lxml')
 # print(ret.find(class="div"))
 
-header = {
-  'accept' : "application/vnd.github.v3+json"
-}
-r2 = requests.get('https://github.com/favicon.ico',headers=header)
-print(r2.status_code)
-with open("favicon.ico",'wb') as f:
-  f.write(r2.content)
-  f.close()
+# header = {
+#   'accept' : "application/vnd.github.v3+json"
+# }
+# r2 = requests.get('https://github.com/favicon.ico',headers=header)
+# print(r2.status_code)
+# with open("favicon.ico",'wb') as f:
+#   f.write(r2.content)
+#   f.close()
+
+# 书上说会用为ssl证书得不到认可而报错，结果却并没有
+r = requests.get('https://www.12306.cn',verify=True)
+print(r.status_code)
