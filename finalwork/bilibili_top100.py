@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 def request():
   baseurl = 'https://www.bilibili.com/v/popular/rank/all'
@@ -15,20 +16,42 @@ def request():
     print(response.status_code)
     return None
 
-if __name__ == '__main__':
+def getVedio():
   html = request()
   res = BeautifulSoup(html,'lxml')
   list = res.find_all('li')
-  # print(list)
   data = []
+
   for item in list:
     map = {}
+
     if item.find('div',class_='num') == None:
       continue
-    # map['No'] = item.find('div',class_='num').string
-    # map['Title'] = item.find('a',class_='title').string
-    print(item.find('span',class_='data-box up-name'))
-    name = item.find('span', class_='data-box up-name')
 
+    map['No'] = item.find('div',class_='num').string
+    map['Title'] = item.find('a',class_='title').string
+
+    result1 = re.search(r'<span.*?</i>(.*?)</span>.*?<span.*?</i>(.*?)</span>.*?<span.*?</i>(.*?)</span>',str(item.find('div',class_='detail')),re.DOTALL)
+    
+    map['Play Volume'] = result1.group(1).strip()
+    map['View'] = result1.group(2).strip()
+    map['Author'] = result1.group(3).strip()
+
+    result2 = re.search(r'<div.*?href="//(.*?)".*?</div',str(item.find('div',class_='img')))
+    map['Link'] = result2.group(1)
     data.append(map)
-  print(data)
+
+  return data
+
+if __name__ == '__main__':
+    data = getVedio()
+    for item in data:
+      print(f'No:' + item['No'],end='\n')
+      print(f'Title:' + item['Title'],end='\n')
+      print(f'Author:' + item['Author'],end='\n')
+      print(f'播放量:' + item['Play Volume'],end='\n')
+      print(f'弹幕数:' + item['View'],end='\n')
+      print(f'Link:' + item['Link'],end='\n')
+      print(" ")
+
+  
