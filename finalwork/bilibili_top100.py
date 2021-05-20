@@ -37,8 +37,8 @@ def getVedio():
     map['View'] = result1.group(2).strip()
     map['Author'] = result1.group(3).strip()
 
-    result2 = re.search(r'<div.*?href="//(.*?)".*?</div',str(item.find('div',class_='img')))
-    map['Link'] = result2.group(1)
+    result2 = re.search(r'<div.*?href="//.*?video/(.*?)".*?</div',str(item.find('div',class_='img')))
+    map['Bvid'] = result2.group(1)
     data.append(map)
 
   return data
@@ -51,7 +51,7 @@ if __name__ == '__main__':
       print(f'Author:' + item['Author'],end='\n')
       print(f'播放量:' + item['Play Volume'],end='\n')
       print(f'弹幕数:' + item['View'],end='\n')
-      print(f'Link:' + item['Link'],end='\n')
+      print(f'Bvid:' + item['Bvid'],end='\n')
       print(" ")
 
   
