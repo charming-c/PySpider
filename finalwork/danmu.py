@@ -60,6 +60,7 @@ def getDanmu1(bvid):
         data = []
         for item in list:
             data.append(item.string)
+        print(data)
         return data
     else:
         return None
@@ -91,5 +92,5 @@ def generateCloud(bvid):
 
 
 if __name__ == '__main__':
-    # generateCloud('BV1j54y1V7fd')
-    getDanmu1('BV1f54y1V7FR')
+    generateCloud('BV1j54y1V7fd')
+    # getDanmu1('BV1f54y1V7FR')
