@@ -272,6 +272,7 @@ def task():
         "#geetest-wrap > div > div.btn-box > a.btn.btn-login").click()
     time.sleep(2)
     checkVeriImage(driver)
+    driver.refresh()
     cookie_list = driver.get_cookies()
     # driver.close()
     # cookies = ";".join(
