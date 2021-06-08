@@ -1,3 +1,4 @@
+from logging import exception
 from selenium import webdriver
 import time
 import base64
@@ -232,14 +233,56 @@ def dragVeriImage(driver, offsetX):
         checkVeriImage(driver)
         return
 
+#   该方法用来确认元素是否存在，如果存在返回flag=true，否则返回false
+
+
+def isElementExist(driver, css):
+    try:
+        driver.find_element_by_css_selector(css)
+        return True
+    except:
+        return False
+
 
 def isNeedCheckVeriImage(driver):
-    if driver.find_element_by_css_selector(".geetest_panel_error").is_displayed():
-        driver.find_element_by_css_selector(
-            ".geetest_panel_error_content").click()
-        return True
+    if isElementExist(driver, ".geetest_panel_error"):
+        if driver.find_element_by_css_selector(".geetest_panel_error").is_displayed():
+            driver.find_element_by_css_selector(
+                ".geetest_panel_error_content").click()
+            return True
+        else:
+            return False
     else:
         return False
+
+
+def getCookie(driver):
+    cookie_list = driver.get_cookies()
+    # driver.close()
+    # cookies = ";".join(
+    #     [item["name"] + "=" + item["value"] + "" for item in cookie_list])
+    # print(cookies)
+    # session = requests.Session()
+    # # cookie要放到headers里
+    # headers = {
+    #     'Cookie': cookies
+    # }
+    # response = session.get(
+    #     url='https://api.bilibili.com/x/web-interface/history/cursor?max=0&view_at=0&business=', headers=headers).json()
+    # print(response)
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36',
+    }
+    s = requests.session()
+    s.headers.update(headers)
+    for cookie in driver.get_cookies():
+        c = {cookie['name']: cookie['value']}
+        s.cookies.update(c)
+    # cookie要放到headers里
+    response = s.get(
+        url='https://api.bilibili.com/x/web-interface/history/cursor?max=0&view_at=0&business=', headers=headers).json()
+    print(response)
+    return cookie_list
 
 
 def task():
@@ -271,43 +314,15 @@ def task():
     driver.find_element_by_css_selector(
         "#geetest-wrap > div > div.btn-box > a.btn.btn-login").click()
     time.sleep(2)
-    checkVeriImage(driver)
-    driver.refresh()
-    cookie_list = driver.get_cookies()
-    # driver.close()
-    # cookies = ";".join(
-    #     [item["name"] + "=" + item["value"] + "" for item in cookie_list])
-    # print(cookies)
-    # session = requests.Session()
-    # # cookie要放到headers里
-    # headers = {
-    #     'Cookie': cookies
-    # }
-    # response = session.get(
-    #     url='https://api.bilibili.com/x/web-interface/history/cursor?max=0&view_at=0&business=', headers=headers).json()
-    # print(response)
-    cookie = [item["name"] + "=" + item["value"] for item in cookie_list]
-    cookiestr = '; '.join(item for item in cookie)
-    print(cookiestr)
-    session = requests.Session()
-    # cookie要放到headers里
-    headers = {
-        'Cookie': cookiestr
-    }
-    response = session.get(
-        url='https://api.bilibili.com/x/web-interface/history/cursor?max=0&view_at=0&business=', headers=headers).json()
-    print(response)
-
-    return cookie_list
-
-
-#   该方法用来确认元素是否存在，如果存在返回flag=true，否则返回false
-def isElementExist(driver, css):
     try:
-        driver.find_element_by_css_selector(css)
-        return True
-    except:
-        return False
+        checkVeriImage(driver)
+    except exception:
+        driver.refresh()
+        cookie_list = getCookie(driver)
+        if cookie_list == None:
+            task()
+    finally:
+        return cookie_list
 
 
 if __name__ == '__main__':

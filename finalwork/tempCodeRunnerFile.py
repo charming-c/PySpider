@@ -1,3 +1,2 @@
-# if isNeedCheckVeriImage(driver):
-#     checkVeriImage(driver)
-#     return
+PASSWORD = 'caijiaming'
+USERNAME = '15879239734'
