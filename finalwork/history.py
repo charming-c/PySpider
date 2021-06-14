@@ -55,19 +55,14 @@ def getHistory():
                 vedio_format_list.append(item)
         else:
             break
-    print(vedio_format_list.count)
+    print(len(vedio_format_list))
+    print(vedio_format_list)
     return vedio_format_list
 
 
-def getHistoryList():
-    # 返回直接的网络请求的body
+def analyseHistoryList():
+    # 返回能够拿到的所有历史
     list = getHistory()
-
-    # 返回之后的History的参数,以及视频的List
-    paramList = list['data']['cursor']
-    vedio = list['data']['list']
-    vedio_format = vedioFormat(vedio)
-    print(vedio_format)
 
 
 if __name__ == "__main__":
