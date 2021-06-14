@@ -60,7 +60,6 @@ def getDanmu1(bvid):
         data = []
         for item in list:
             data.append(item.string)
-        print(data)
         return data
     else:
         return None

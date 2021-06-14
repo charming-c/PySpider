@@ -1,8 +1,9 @@
+import time
 import requests
 from bs4 import BeautifulSoup
 import re
 
-cookies = "_uuid=63FE9804-4EAC-2F0B-82E8-96BBCF1A200422552infoc; buvid3=8FC30C23-64E4-4E5E-83C6-B9C853581AD534755infoc; fingerprint=d89efac30b065e08cd50a00b8ef8e4da; buvid_fp_plain=66485397-ACB0-48F1-9DD9-2F117C9385B434781infoc; buvid_fp=11A5B980-3A38-4537-A15C-C9917FB0819013416infoc; SESSDATA=4c1178d4,1638717885,694ea*61; bili_jct=6be88b4d1b391a05b18bb9bb5c70b608; DedeUserID=393655428; DedeUserID__ckMd5=4f73a2d258556d63; sid=a0dkun8s; PVID=3; bfe_id=018fcd81e698bbc7e0648e86bdc49e09"
+cookies = "_uuid=F2E037CB-E440-8D01-38BF-44AE2B88C69D25532infoc; buvid3=850CC698-A15D-4728-916C-16ADB89FDB2C58470infoc; CURRENT_FNVAL=80; blackside_state=1; rpdid=|(JY~|lk~)kJ0J'uY|lmlumRm; fingerprint3=d8cba0a319d8ae4d4d70620a5fa6e407; buivd_fp=850CC698-A15D-4728-916C-16ADB89FDB2C58470infoc; buvid_fp_plain=850CC698-A15D-4728-916C-16ADB89FDB2C58470infoc; fingerprint_s=d8daf13363291e7cc71968a6f67561e1; CURRENT_QUALITY=120; buvid_fp=850CC698-A15D-4728-916C-16ADB89FDB2C58470infoc; bp_t_offset_393655428=527265651439099836; DedeUserID=393655428; DedeUserID__ckMd5=4f73a2d258556d63; PVID=2; bsource=search_google; bfe_id=018fcd81e698bbc7e0648e86bdc49e09; fingerprint=b79a6143ddb7d7dc9527336b56442b40; SESSDATA=b770dac9%2C1639242101%2C80dda%2A61; bili_jct=cc3c2b7402fe901348256876ad21bdfc; sid=6un6d6jr; bp_video_offset_393655428=536163651146616019"
 
 
 def vedioFormat(vedio):
@@ -29,7 +30,7 @@ def getLaterHistory(param):
         return None
 
 
-def getHistory():
+def getHistory(username, password):
     vedio_format_list = []
     session = requests.Session()
     # cookie要放到headers里
@@ -55,15 +56,16 @@ def getHistory():
                 vedio_format_list.append(item)
         else:
             break
-    print(len(vedio_format_list))
-    print(vedio_format_list)
+        time.sleep(3)
+    # print(len(vedio_format_list))
+    # print(vedio_format_list)
     return vedio_format_list
 
 
 def analyseHistoryList():
-    # 返回能够拿到的所有历史
+    # 返回能够拿到的所有历史`
     list = getHistory()
 
 
 if __name__ == "__main__":
-    getHistory()
+    getHistory('12344', '22323')
