@@ -267,7 +267,7 @@ def dataBaseMenu():
             'choices': [
                 'vedio',
                 'danmu',
-                'history'
+                'history',
                 'exit',
             ],
             'validate': lambda answer: 'You must choose at least one topping.'
@@ -302,11 +302,12 @@ def loginMenu():
     ]
     answers = prompt(questions)
     historyData = getHistory(answers['username'], answers['password'])
-    print(f"共检测到" + str(len(historyData)) + '条数据')
+    print(f"共获得" + str(len(historyData)) + '条历史记录')
     saveHistory(historyData)
-    print(f'已保存到数据库!')
+    print(f'已保存到数据库!\n前十条如下:\n')
     for i in range(0, 10):
-        print(f'No ' + str(i) + '.' + historyData[i]['title'])
+        print(f'No ' + str(i + 1) + '.' + historyData[i]['title'])
+    print(" ")
     return 1
 
 

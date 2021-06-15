@@ -1,66 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-When example
-"""
-from __future__ import print_function, unicode_literals
+import time
 
-from PyInquirer import prompt, print_json, Separator
+from rich.progress import Progress
 
-# def dislikes_bacon(answers):
-#     # demonstrate use of a function... here a lambda function would be enough
-#     return not answers['bacon']
+with Progress() as progress:
 
+    task1 = progress.add_task("[red]Downloading...", total=1000)
+    task2 = progress.add_task("[green]Processing...", total=1000)
+    task3 = progress.add_task("[cyan]Cooking...", total=1000)
 
-# questions = [
-#     {
-#         'type': 'confirm',
-#         'name': 'bacon',
-#         'message': 'Do you like bacon?'
-#     },
-#     {
-#         'type': 'input',
-#         'name': 'favorite',
-#         'message': 'Bacon lover, what is your favorite type of bacon?',
-#         'when': lambda answers: answers['bacon']
-#     },
-#     {
-#         'type': 'confirm',
-#         'name': 'pizza',
-#         'message': 'Ok... Do you like pizza?',
-#         'default': False,  # only for demo :)
-#         'when': dislikes_bacon
-#     },
-#     {
-#         'type': 'input',
-#         'name': 'favorite',
-#         'message': 'Whew! What is your favorite type of pizza?',
-#         'when': lambda answers: answers.get('pizza', False)
-#     }
-# ]
-
-# answers = prompt(questions, style=custom_style_2)
-
-# print(answers)
-questions = [
-    {
-        'type': 'checkbox',
-        'name': 'theme',
-        'message': 'What do you want to do?',
-        'choices': [
-            {
-                'name': 'lalala',
-                'yitkt': 'sxsj',
-            }
-        ]
-    },
-    {
-        'type': 'rawlist',
-        'name': 'size',
-        'message': 'What size do you need',
-        'choices': ['Jumbo', 'Large', 'Standard', 'Medium', 'Small', 'Micro'],
-        'filter': lambda val: val.lower()
-    }
-]
-
-answers = prompt(questions)
-print(answers)
+    while not progress.finished:
+        progress.update(task1, advance=0.5)
+        progress.update(task2, advance=0.3)
+        progress.update(task3, advance=20)
+        time.sleep(0.02)
