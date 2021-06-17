@@ -11,7 +11,7 @@ import copy
 from webdriver_manager.chrome import ChromeDriverManager
 
 PASSWORD = 'caijiaming'
-USERNAME = '15879239734'
+USERNAME = ''
 ChromeVersion = '91.0.4472.19'
 
 

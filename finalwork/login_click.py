@@ -15,7 +15,7 @@ header = {
 }
 
 username = "15879239734"
-password = "caijiaming"
+password = ""
 
 browser = webdriver.Chrome()
 browser.get('https://passport.bilibili.com/login')
